@@ -4,13 +4,12 @@ Angular - Drag and Drop
 Drag and drop dataobjects with angular using directives and HTML5
 
 
-drop
-	  items - Context of the drop directive
-	  drop  - function thats called when an item is dropped on it.
+<b>drop</b><br/>
+items - Context of the drop directive<br/>
+drop  - function thats called when an item is dropped on it.
     
-drag 
-    pass object to drag - that object will be dropped on drop and passed to drop function
-
+<b>drag</b><br/>
+pass object to drag - that object will be dropped on drop and passed to drop function
 
  <drop items="todos"
        drop="toTodo(data)"
