@@ -52,4 +52,5 @@ pass object to drag - that object will be dropped on drop and passed to drop fun
                 </ul>
 
     </drop>
-
+<b>Exampel of usage</b>
+<a target='_blank' href='http://imageshack.us/photo/my-images/268/angulardnd.png/'><img src='http://img268.imageshack.us/img268/4500/angulardnd.png' border='0'/></a><br></a>
