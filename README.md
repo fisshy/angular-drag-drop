@@ -11,6 +11,7 @@ drop  - function thats called when an item is dropped on it.
 <b>drag</b><br/>
 pass object to drag - that object will be dropped on drop and passed to drop function<br/>
 
+<code>
  <drop items="todos"
        drop="toTodo(data)"
        class="drag-and-drop">
@@ -38,3 +39,4 @@ pass object to drag - that object will be dropped on drop and passed to drop fun
 
       </ul>
   </drop>
+  </code>
