@@ -33,10 +33,12 @@ module.directive( 'drop', function ( $compile ) {
 
     return {
         scope: {
-            items: '=items',
-            drop: '&'
+            items: '=drop',
+            whendrop: '&'
         },
         link: function ( scope, elem, attr, ctrl ) {
+
+          
 
             elem.bind( 'drop', function ( e ) {
 
@@ -49,7 +51,7 @@ module.directive( 'drop', function ( $compile ) {
 
                 scope.$apply( function () {
 
-                    scope.drop( { data: data } );
+                    scope.whendrop( { data: data } );
 
                 } );
 
@@ -60,16 +62,18 @@ module.directive( 'drop', function ( $compile ) {
                     e.preventDefault();
                 }
 
+                e.originalEvent.dataTransfer.dropEffect = 'move';
+
                 return false;
             } );
 
             elem.bind( 'dragleave', function ( e ) {
-
+                console.log("leave");
             } );
 
 
             elem.bind( 'dragenter', function ( e ) {
-
+                console.log( "enter" );
             } );
 
         }

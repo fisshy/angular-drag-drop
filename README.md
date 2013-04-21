@@ -5,15 +5,16 @@ Drag and drop dataobjects with angular using directives and HTML5
 
 
 <b>drop</b><br/>
-items - Context of the drop directive<br/>
-drop  - function thats called when an item is dropped on it.
+drop     - Context of the drop directive<br/>
+whendrop - function thats called when an item is dropped on it.
     
 <b>drag</b><br/>
 pass object to drag - that object will be dropped on drop and passed to drop function<br/>
 
- <drop items="todos"
-       drop="toTodo(data)"
-       class="drag-and-drop">
+  <div
+      drop="todos"
+      whendrop="toTodo(data)"
+      class="drag-and-drop">
 
       <ul class="thumbnails span12">
 
