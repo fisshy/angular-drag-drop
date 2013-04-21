@@ -37,5 +37,4 @@ pass object to drag - that object will be dropped on drop and passed to drop fun
           </li>
 
       </ul>
-
   </drop>
