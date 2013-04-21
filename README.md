@@ -3,6 +3,19 @@ Angular - Drag and Drop
 
 Drag and drop dataobjects with angular using directives and HTML5
 
+<b>Todo</b> <br/>
+<ul>
+    
+<li>
+ Highligt drop places on begin drag    
+</li>
+
+
+<li>
+ Fix IE10 issue on setData/getData  
+</li>
+
+</ul>
 
 <b>drop</b><br/>
 items - Context of the drop directive<br/>
