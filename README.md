@@ -11,32 +11,32 @@ drop  - function thats called when an item is dropped on it.
 <b>drag</b><br/>
 pass object to drag - that object will be dropped on drop and passed to drop function<br/>
 
-<code>
- <drop items="todos"
-       drop="toTodo(data)"
-       class="drag-and-drop">
 
-      <ul class="thumbnails span12">
+      <drop  
+        items="todos"  
+        drop="toTodo(data)"
+        class="drag-and-drop">
+      
+                <ul class="thumbnails span12">
 
-          <li ng-repeat="item in items" class="span12">
+                    <li ng-repeat="item in items" class="span12">
 
-              <div drag="item">
-                  
-                  <div class="thumbnail item" draggable="true">
-                      
-                      <span class="done-{{item.done}} ">{{item.title}}</span>
-                      
-                      <a class="move-right" href="#/todos/edit/{{item.todoId}}">
-                      
-                          <i class="icon-edit"></i>
-                      </a>
+                        <div drag="item">
+                            
+                            <div class="thumbnail item" draggable="true">
+                                
+                                <span class="done-{{item.done}} ">{{item.title}}</span>
+                                <a class="move-right" href="#/todos/edit/{{item.todoId}}">
+                                    <i class="icon-edit"></i>
+                                </a>
 
-                  </div>
+                            </div>
 
-              </div>
+                        </div>
 
-          </li>
+                    </li>
 
-      </ul>
-  </drop>
-  </code>
+                </ul>
+
+    </drop>
+
