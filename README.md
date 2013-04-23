@@ -11,10 +11,6 @@ Drag and drop dataobjects with angular using directives and HTML5
 </li>
 
 
-<li>
- Fix IE10 issue on setData/getData  
-</li>
-
 </ul>
 
 <b>drop</b><br/>
@@ -24,18 +20,10 @@ whendrop - function thats called when an item is dropped on it.
 <b>drag</b><br/>
 pass object to drag - that object will be dropped on drop and passed to drop function<br/>
 
-<<<<<<< HEAD
-  <div
-      drop="todos"
-      whendrop="toTodo(data)"
-      class="drag-and-drop">
-=======
->>>>>>> c9b671b71015eebc6b471c50d5036d03b9b5046c
-
-      <drop  
-        items="todos"  
-        drop="toTodo(data)"
-        class="drag-and-drop">
+  	<div
+      		drop="todos"
+      		whendrop="toTodo(data)"
+      		class="drag-and-drop">
       
                 <ul class="thumbnails span12">
 

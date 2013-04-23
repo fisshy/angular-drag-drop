@@ -13,7 +13,7 @@ module.directive( 'drag', function () {
 
                 e.originalEvent.dataTransfer.effectAllowed = 'move';
 
-                e.originalEvent.dataTransfer.setData( 'text/plain', angular.toJson( scope.item ) );
+                e.originalEvent.dataTransfer.setData( 'text', angular.toJson( scope.item ) );
 
             } );
 
@@ -47,7 +47,7 @@ module.directive( 'drop', function ( $compile ) {
 
                 e.originalEvent.dataTransfer.dropEffect = 'move';
 
-                var data = angular.fromJson( e.originalEvent.dataTransfer.getData( 'text/plain' ) );
+                var data = angular.fromJson( e.originalEvent.dataTransfer.getData( 'text' ) );
 
                 scope.$apply( function () {
 
