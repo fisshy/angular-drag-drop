@@ -7,7 +7,7 @@ Drag and drop dataobjects with angular using directives and HTML5
 <ul>
     
 <li>
- Highligt drop places on begin drag    
+ Bind drag to drop, So we only can drop on specific drop if wanted.
 </li>
 
 
