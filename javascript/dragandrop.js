@@ -2,7 +2,8 @@
 /*app.js module*/
 module.directive( 'drag', function () {
 
-    var drags = [];
+    var drags = [],
+        dragging = new RegExp( '(\\s|^)dragging(\\s|$)' );;
 
     return {
         restrict: 'A',
@@ -39,8 +40,7 @@ module.directive( 'drag', function () {
 
                 angular.forEach( drags, function ( value, key ) {
 
-                    var reg = new RegExp( '(\\s|^)dragging(\\s|$)' );
-                    value.className = value.className.replace( reg, '' );
+                    value.className = value.className.replace( dragging, '' );
 
                 } );
 
@@ -56,7 +56,8 @@ module.directive( 'drag', function () {
 
 module.directive( 'drop', function () {
 
-    var drags = [];
+    var drags = [],
+        dragging = new RegExp( '(\\s|^)dragging(\\s|$)' );;
 
     return {
         scope: {
@@ -86,8 +87,7 @@ module.directive( 'drop', function () {
 
                 angular.forEach( drags, function ( value, key ) {
 
-                    var reg = new RegExp( '(\\s|^)dragging(\\s|$)' );
-                    value.className = value.className.replace( reg, '' );
+                    value.className = value.className.replace( dragging, '' );
 
                 } );
 
