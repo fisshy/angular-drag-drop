@@ -2,12 +2,24 @@
 /*app.js module*/
 module.directive( 'drag', function () {
 
+    var drags = [];
+
     return {
         restrict: 'A',
         scope: { item: '=drag' },
         link: function ( scope, elem, attr, ctrl ) {
 
             elem.bind( 'dragstart', function ( e ) {
+
+                if ( drags.length === 0 ) {
+                    drags = document.querySelectorAll( '.drop' );
+                }
+
+                angular.forEach( drags, function ( value, key ) {
+
+                    value.className = value.className + ' dragging';
+
+                } );
 
                 this.style.opacity = '0.4';
 
@@ -18,18 +30,33 @@ module.directive( 'drag', function () {
             } );
 
             elem.bind( 'dragleave', function ( e ) {
+
             } );
 
             elem.bind( 'dragend', function ( e ) {
 
                 this.style.opacity = '1';
 
+                angular.forEach( drags, function ( value, key ) {
+
+                    var reg = new RegExp( '(\\s|^)dragging(\\s|$)' );
+                    value.className = value.className.replace( reg, '' );
+
+                } );
+
             } );
+
+            elem[0].draggable = true;
+
+            elem[0].className = elem[0].className + ' drag';
+
         }
     };
 } );
 
-module.directive( 'drop', function ( $compile ) {
+module.directive( 'drop', function () {
+
+    var drags = [];
 
     return {
         scope: {
@@ -37,8 +64,6 @@ module.directive( 'drop', function ( $compile ) {
             whendrop: '&'
         },
         link: function ( scope, elem, attr, ctrl ) {
-
-          
 
             elem.bind( 'drop', function ( e ) {
 
@@ -55,26 +80,39 @@ module.directive( 'drop', function ( $compile ) {
 
                 } );
 
+                if ( drags.length === 0 ) {
+                    drags = document.querySelectorAll( '.drop' );
+                }
+
+                angular.forEach( drags, function ( value, key ) {
+
+                    var reg = new RegExp( '(\\s|^)dragging(\\s|$)' );
+                    value.className = value.className.replace( reg, '' );
+
+                } );
+
             } );
 
             elem.bind( 'dragover', function ( e ) {
+
                 if ( e.preventDefault ) {
                     e.preventDefault();
                 }
 
-                e.originalEvent.dataTransfer.dropEffect = 'move';
-
                 return false;
+
             } );
 
             elem.bind( 'dragleave', function ( e ) {
-                console.log("leave");
+
             } );
 
 
             elem.bind( 'dragenter', function ( e ) {
-                console.log( "enter" );
+
             } );
+
+            elem[0].className = elem[0].className + ' drop';
 
         }
     };

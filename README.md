@@ -22,8 +22,7 @@ pass object to drag - that object will be dropped on drop and passed to drop fun
 
   	<div
       		drop="todos"
-      		whendrop="toTodo(data)"
-      		class="drag-and-drop">
+      		whendrop="toTodo(data)">
       
                 <ul class="thumbnails span12">
 
@@ -31,7 +30,7 @@ pass object to drag - that object will be dropped on drop and passed to drop fun
 
                         <div drag="item">
 
-                            <div class="thumbnail item" draggable="true">
+                            <div class="thumbnail item">
 
                                 <span class="done-{{item.done}} ">{{item.title}}</span>
                                 <a class="move-right" href="#/todos/edit/{{item.todoId}}">

@@ -8,21 +8,33 @@
     -webkit-user-drag: element;
 }
 
-.drag-and-drop {
+/*
+drop element    
+*/
+.drop {
     height: 500px;
+    padding: 9px;
+    border: 2px dashed #fff;
+}
+
+/*
+drag element 
+*/
+.drag {
     cursor: move;
 }
 
-.over {
-    
-    padding: 20px;
-    margin: 10px;
-    background: #ff0030;
-    color: #fff;
-    border: 2px dashed #fff;
+/*
+class added to all .drop elements while dragging    
+*/
+.dragging {
+    padding: 9px;
+    background: #ededed;
+    border: 2px dashed #000;
     border-radius: 10px;
-    box-shadow: 0 0 0 4px #ff0030, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
-    text-shadow: -1px -1px #aa3030;
-    font-weight: normal;
-    font-weight: normal;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
