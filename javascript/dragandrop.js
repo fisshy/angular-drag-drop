@@ -70,8 +70,13 @@ module.directive( 'drop', function () {
 
                 e.stopPropagation();
                 e.preventDefault();
+                
+                if (e.originalEvent.dataTransfer.dropEffect !== 'move') {
 
-                e.originalEvent.dataTransfer.dropEffect = 'move';
+                    e.originalEvent.dataTransfer.clearData();
+
+                    return;
+                }
 
                 var data = angular.fromJson( e.originalEvent.dataTransfer.getData( 'text' ) );
 
