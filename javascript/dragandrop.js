@@ -108,15 +108,6 @@ module.directive( 'drop', function () {
 
             } );
 
-            elem.bind( 'dragleave', function ( e ) {
-
-            } );
-
-
-            elem.bind( 'dragenter', function ( e ) {
-
-            } );
-
             elem[0].className = elem[0].className + ' drop';
 
         }
