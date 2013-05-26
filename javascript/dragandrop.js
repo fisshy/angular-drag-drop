@@ -30,10 +30,7 @@ module.directive( 'drag', function () {
 
             } );
 
-            elem.bind( 'dragleave', function ( e ) {
-
-            } );
-
+            
             elem.bind( 'dragend', function ( e ) {
 
                 this.style.opacity = '1';
