@@ -1,6 +1,5 @@
-﻿
-/*app.js module*/
-module.directive( 'drag', function () {
+angular.module('dragAndDrop', [])
+    .directive( 'drag', function () {
 
     var drags = [],
         dragging = new RegExp( '(\\s|^)dragging(\\s|$)' );;
@@ -24,13 +23,12 @@ module.directive( 'drag', function () {
 
                 this.style.opacity = '0.4';
 
-                e.originalEvent.dataTransfer.effectAllowed = 'move';
-
-                e.originalEvent.dataTransfer.setData( 'text', angular.toJson( scope.item ) );
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData( 'text', angular.toJson( scope.item ) );
 
             } );
 
-            
+
             elem.bind( 'dragend', function ( e ) {
 
                 this.style.opacity = '1';
@@ -49,38 +47,28 @@ module.directive( 'drag', function () {
 
         }
     };
-} );
-
-module.directive( 'drop', function () {
+} ).directive( 'drop', function () {
 
     var drags = [],
         dragging = new RegExp( '(\\s|^)dragging(\\s|$)' );;
 
     return {
         scope: {
-            items: '=drop',
-            whendrop: '&'
+            drop : '=',
+            whenDrop: '&'
         },
         link: function ( scope, elem, attr, ctrl ) {
 
             elem.bind( 'drop', function ( e ) {
 
-                e.stopPropagation();
-                e.preventDefault();
-                
-                if (e.originalEvent.dataTransfer.dropEffect !== 'move') {
-
-                    e.originalEvent.dataTransfer.clearData();
-
-                    return;
+                if(e.stopPropagation()){
+                    e.preventDefault();
                 }
 
-                var data = angular.fromJson( e.originalEvent.dataTransfer.getData( 'text' ) );
+                var data = angular.fromJson( e.dataTransfer.getData( 'text' ) );
 
                 scope.$apply( function () {
-
-                    scope.whendrop( { data: data } );
-
+                    scope.whenDrop( { data: data } );
                 } );
 
                 if ( drags.length === 0 ) {
@@ -94,6 +82,10 @@ module.directive( 'drop', function () {
                 } );
 
             } );
+
+            elem.bind ( 'dragenter', function(e){
+                e.dataTransfer.dropEffect = 'move'
+            });
 
             elem.bind( 'dragover', function ( e ) {
 
