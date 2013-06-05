@@ -18,7 +18,7 @@ Live example http://www.devfishy.com/dnd
 
 <b>drop</b><br/>
 drop     - Context of the drop directive<br/>
-whendrop - function thats called when an item is dropped on it.
+whenDrop - function thats called when an item is dropped on it.
     
 <b>drag</b><br/>
 pass object to drag - that object will be dropped on drop and passed to drop function<br/>
