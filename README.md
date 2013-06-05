@@ -25,11 +25,11 @@ pass object to drag - that object will be dropped on drop and passed to drop fun
 
   	<div
       		drop="todos"
-      		whendrop="toTodo(data)">
+      		when-drop="toTodo(data)">
       
                 <ul class="thumbnails span12">
 
-                    <li ng-repeat="item in items" class="span12">
+                    <li ng-repeat="item in drop" class="span12">
 
                         <div drag="item">
 
