@@ -1,12 +1,18 @@
+
+
 angular.module('dragAndDrop', [])
-    .directive( 'drag', function () {
+    .directive( 'drag', function ( dndApi ) {
 
     var drags = [],
         dragging = new RegExp( '(\\s|^)dragging(\\s|$)' );;
 
     return {
         restrict: 'A',
-        scope: { item: '=drag' },
+        scope: {
+            item: '=drag',
+            whenStart : '&',
+            whenEnd : '&'
+        },
         link: function ( scope, elem, attr, ctrl ) {
 
             elem.bind( 'dragstart', function ( e ) {
@@ -16,28 +22,34 @@ angular.module('dragAndDrop', [])
                 }
 
                 angular.forEach( drags, function ( value, key ) {
-
                     value.className = value.className + ' dragging';
-
                 } );
 
                 this.style.opacity = '0.4';
 
+                dndApi.setData(scope.item);
+
                 e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData( 'text', angular.toJson( scope.item ) );
+
+                scope.$apply( function () {
+                    scope.whenStart( { data: dndApi.getData() } );
+                } );
 
             } );
-
 
             elem.bind( 'dragend', function ( e ) {
 
                 this.style.opacity = '1';
 
                 angular.forEach( drags, function ( value, key ) {
-
                     value.className = value.className.replace( dragging, '' );
-
                 } );
+
+                scope.$apply( function () {
+                    scope.whenEnd( { data: dndApi.getData() } );
+                } );
+
+                dndApi.removeData();
 
             } );
 
@@ -47,17 +59,24 @@ angular.module('dragAndDrop', [])
 
         }
     };
-} ).directive( 'drop', function () {
+} ).directive( 'drop', function ( dndApi ) {
 
     var drags = [],
-        dragging = new RegExp( '(\\s|^)dragging(\\s|$)' );;
+        dragging = new RegExp( '(\\s|^)dragging(\\s|$)');
 
     return {
         scope: {
             drop : '=',
-            whenDrop: '&'
+            whenDrop: '&',
+            whenEnter : '&',
+            whenLeave : '&'
         },
         link: function ( scope, elem, attr, ctrl ) {
+
+            var left = elem[0].offsetLeft,
+                right = left + elem[0].offsetWidth,
+                top = elem[0].offsetTop,
+                bottom = top + elem[0].offsetHeight;
 
             elem.bind( 'drop', function ( e ) {
 
@@ -65,10 +84,8 @@ angular.module('dragAndDrop', [])
                     e.preventDefault();
                 }
 
-                var data = angular.fromJson( e.dataTransfer.getData( 'text' ) );
-
                 scope.$apply( function () {
-                    scope.whenDrop( { data: data } );
+                    scope.whenDrop( { data: dndApi.getData() } );
                 } );
 
                 if ( drags.length === 0 ) {
@@ -81,10 +98,31 @@ angular.module('dragAndDrop', [])
 
                 } );
 
+                dndApi.removeData();
+
             } );
 
             elem.bind ( 'dragenter', function(e){
-                e.dataTransfer.dropEffect = 'move'
+
+                if(elem[0] == e.target)
+                {
+                    scope.$apply( function () {
+                        scope.whenEnter( { data: dndApi.getData() } );
+                    } );
+                }
+
+            });
+
+            elem.bind ( 'dragleave', function(e){
+
+
+                if( (e.x < left || e.x > right) ||
+                    (e.y < top  || e.y > bottom) )
+                {
+                    scope.$apply( function () {
+                        scope.whenLeave( { data: dndApi.getData() } );
+                    } );
+                }
             });
 
             elem.bind( 'dragover', function ( e ) {
@@ -101,4 +139,21 @@ angular.module('dragAndDrop', [])
 
         }
     };
+} ).factory('dndApi', function(){
+
+        var dnd = {
+            dragObject : {}
+        };
+
+        return {
+            setData : function(data){
+                dnd.dragObject = data;
+            },
+            removeData : function(){
+                dnd.dragObject = null;
+            },
+            getData : function(){
+                return dnd.dragObject;
+            }
+        };
 } );
