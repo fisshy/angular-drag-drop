@@ -17,37 +17,36 @@ Live example http://www.devfishy.com/dnd
 </ul>
 
 <b>drop</b><br/>
-drop     - Context of the drop directive<br/>
-whenDrop - function thats called when an item is dropped on it.
+drop      - Context of the drop directive   <br/>
+whenDrop  - Takes a function thats called when drag is dropped  <br/>
+whenEnter - Takes a function thats called when drag enters drop-area    <br/>
+whenLeave - Takes a function thats called when drag leaves drop-area    <br/>
     
 <b>drag</b><br/>
-pass object to drag - that object will be dropped on drop and passed to drop function<br/>
+drag      - Context of the current drag item. <br/>
+whenStart - Takes a function to be called when drag starts <br />
+whenEnd   - Takes a function to be called when drag ends    <br/>
 
-  	<div
-      		drop="todos"
-      		when-drop="toTodo(data)">
-      
-                <ul class="thumbnails span12">
+  	<div ng-controller="MyCtrl" class="wrapper">
 
-                    <li ng-repeat="item in drop" class="span12">
+          <div class="objects">
+              <div ng-repeat="item in htmlItems"  
+                   drag="item" 
+                   class="span12">
+                  <span>{{item.name}}</span>
+              </div>
+          </div>
 
-                        <div drag="item">
+          <div drop="html"
+               when-drop="addToLayout(data)"
+               when-enter="previewHtml(data)"
+               when-leave="removePreview(data)"
+               class="html">
+              <div ng-bind-html-unsafe="drop">
 
-                            <div class="thumbnail item">
+              </div>
+          </div>
 
-                                <span class="done-{{item.done}} ">{{item.title}}</span>
-                                <a class="move-right" href="#/todos/edit/{{item.todoId}}">
-                                    <i class="icon-edit"></i>
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                    </li>
-
-                </ul>
-
-            </div>
+      </div>
 <b>Exampel of usage</b>
 <a target='_blank' href='http://imageshack.us/photo/my-images/268/angulardnd.png/'><img src='http://img268.imageshack.us/img268/4500/angulardnd.png' border='0'/></a><br></a>
