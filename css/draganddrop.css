@@ -9,7 +9,7 @@
 }
 
 /*
-drop element    
+drop element
 */
 .drop {
     height: 500px;
@@ -18,14 +18,21 @@ drop element
 }
 
 /*
-drag element 
+drag element
 */
 .drag {
     cursor: move;
 }
 
 /*
-class added to all .drop elements while dragging    
+element being dragged
+*/
+.on-drag {
+    opacity: 0.4;
+}
+
+/*
+class added to all .drop elements while dragging
 */
 .dragging {
     padding: 9px;
