@@ -29,7 +29,10 @@
 
                         dndApi.setData(scope.item);
 
-                        e.dataTransfer.effectAllowed = 'move';
+                        e.originalEvent.dataTransfer.effectAllowed = 'move';
+
+                        //ALLOWS MOVEMENT IN FIREFOX:
+                        e.originalEvent.dataTransfer.setData( 'text', 'asf' );
 
                         scope.$apply( function () {
                             scope.whenStart( { data: dndApi.getData() } );
