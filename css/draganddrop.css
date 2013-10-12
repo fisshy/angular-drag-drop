@@ -34,7 +34,7 @@ element being dragged
 /*
 class added to all .drop elements while dragging
 */
-.dragging {
+.draging {
     padding: 9px;
     background: #ededed;
     border: 2px dashed #000;
