@@ -26,26 +26,5 @@ drag      - Context of the current drag item. <br/>
 whenStart - Takes a function to be called when drag starts <br />
 whenEnd   - Takes a function to be called when drag ends    <br/>
 
-  	<div ng-controller="MyCtrl" class="wrapper">
-
-          <div class="objects">
-              <div ng-repeat="item in htmlItems"  
-                   drag="item" 
-                   class="span12">
-                  <span>{{item.name}}</span>
-              </div>
-          </div>
-
-          <div drop="html"
-               when-drop="addToLayout(data)"
-               when-enter="previewHtml(data)"
-               when-leave="removePreview(data)"
-               class="html">
-              <div ng-bind-html-unsafe="drop">
-
-              </div>
-          </div>
-
-      </div>
 <b>Exampel of usage</b>
 <a target='_blank' href='http://imageshack.us/photo/my-images/268/angulardnd.png/'><img src='http://img268.imageshack.us/img268/4500/angulardnd.png' border='0'/></a><br></a>
