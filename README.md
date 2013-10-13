@@ -3,8 +3,7 @@ Angular - Drag and Drop
 
 Drag and drop dataobjects with angular using directives and HTML5
 
-jsFiddle example http://jsfiddle.net/ADukg/2516/    <br />
-Live example http://www.devfishy.com/dnd
+See example page for setup
 
 <b>Todo</b> <br/>
 <ul>
