@@ -26,15 +26,12 @@ angular.module('dragAndDrop', [])
 
           dndApi.setData(scope.drag);
 
-          e.originalEvent.dataTransfer.effectAllowed = 'move';
-
-          //ALLOWS MOVEMENT IN FIREFOX:
-          if(angular.isDefined(e.originalEvent) && angular.isDefined(e.originalEvent..dataTransfer)){
-            e.originalEvent.dataTransfer.setData( 'text', 'no-data' );
-          }
+          (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
+          (e.originalEvent || e).dataTransfer.setData( 'text', 'no-data' );
 
           if(angular.isFunction(scope.whenStart)) {
             scope.whenStart(dndApi.getData());
+            scope.$apply();
           }
 
         });
@@ -49,6 +46,7 @@ angular.module('dragAndDrop', [])
 
           if(angular.isFunction(scope.whenEnd)){
             scope.whenEnd(dndApi.getData());
+            scope.$apply();
           }
 
           dndApi.removeData();
@@ -65,13 +63,11 @@ angular.module('dragAndDrop', [])
 
     return {
       scope: {
-        drop : '=',
         whenDrop: '=',
         whenEnter : '=',
         whenLeave : '='
       },
       link: function ( scope, elem, attr, ctrl ) {
-
         var left = elem[0].offsetLeft,
             right = left + elem[0].offsetWidth,
             top = elem[0].offsetTop,
@@ -92,22 +88,28 @@ angular.module('dragAndDrop', [])
           }
 
           angular.forEach(drags, function (value, key) {
-            angular.element(value).removeClass('dragging');
+           angular.element(value).addClass('draging');
           });
 
           dndApi.removeData();
 
-        } );
+          scope.$apply();
+        });
 
         elem[0].addEventListener ('dragenter', function(e){
           if(elem[0] === e.target) {
-            scope.whenEnter(dndApi.getData(), elem);
+            if(angular.isFunction(scope.whenEnter)){
+              scope.whenEnter(dndApi.getData(), elem);
+            }
           }
         });
 
         elem[0].addEventListener ( 'dragleave', function(e){
           if((e.x < left || e.x > right) || (e.y < top  || e.y > bottom)) {
-            scope.whenLeave(dndApi.getData(), elem);
+            if(angular.isFunction(scope.whenLeave)){
+              scope.whenLeave(dndApi.getData(), elem);
+              scope.$apply();
+            }
           }
         });
 
@@ -134,7 +136,7 @@ angular.module('dragAndDrop', [])
         dnd.dragObject = data;
       },
       removeData : function(){
-        delete dng.dragObject;
+        delete dnd.dragObject;
       },
       getData : function(){
         return dnd.dragObject;

@@ -2,18 +2,38 @@
 <html ng-app="myApp">
 <head>
 	<link rel="stylesheet" type="text/css" href="https://raw.github.com/fisshy/Angular-drag-drop/master/css/draganddrop.css" />
+	<style>
+		.car{
+			border:1px solid black;
+			padding:5px;
+			height:50px;
+			float:left;
+			width:200px;
+		}
+
+		.sold{
+			border:1px solid black;
+			min-height: 500px;
+			width: 300px;
+			float:right;
+		}
+	</style>
 </head>
 <body>
 
 	<div ng-controller="MyCntrl">
-		<div ng-repeat="car in cars" drag="car">{{ drag.name }}</div>
+		<div  class="car" ng-repeat="car in cars" drag="car">{{ drag.name }}</div>
 
-		<div drop="sold"></div>
-	</div>
+		<div class="sold" drop="sold" when-drop="drop">
+			<div  ng-repeat="car in $parent.sold" >{{ car.name }}</div>
+		</div>
+	</div>	
 
 
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-	<script src="https://rawgithub.com/fisshy/Angular-drag-drop/master/src/dragandrop.js"></script>
+	<!--<script src="https://rawgithub.com/fisshy/Angular-drag-drop/master/src/dragandrop.js"></script>-->
+	<script src="../src/dragandrop.js"></script>
+	
 
 	<script>
 		angular.module('myApp', ['dragAndDrop'])
@@ -21,12 +41,13 @@
 
 				$scope.cars = [ { name : 'Volvo' }, { name : 'Audi' }, { name : 'BMW' }, { name :'Mercedes' } ];
 
-				$scope.sold = []; 
+				$scope.sold = [ { name : 'Volvo' } ]; 
 
 				$scope.drop = function(car){
-					$scope.cars.splice($scope.cars.indexOf(car), 1);
 					$scope.sold.push(angular.copy(car));
 				};
+
+				console.log($scope.sold);
 			});
 	</script>
 </body>
