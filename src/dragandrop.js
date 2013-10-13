@@ -29,8 +29,10 @@ angular.module('dragAndDrop', [])
           e.originalEvent.dataTransfer.effectAllowed = 'move';
 
           //ALLOWS MOVEMENT IN FIREFOX:
-          e.originalEvent.dataTransfer.setData( 'text', 'no-data' );
-
+          if(angular.isDefined(e.originalEvent.dataTransfer)){
+            e.originalEvent.dataTransfer.setData( 'text', 'no-data' );
+          }
+          
           if(angular.isFunction(scope.whenStart)) {
             scope.whenStart(dndApi.getData());
           }

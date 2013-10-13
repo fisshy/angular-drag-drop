@@ -6,14 +6,14 @@
 <body>
 
 	<div ng-controller="MyCntrl">
-		<div ng-repeat="car in cars" drag="car">{{ car.name }}</div>
+		<div ng-repeat="car in cars" drag="car">{{ drag.name }}</div>
 
 		<div drop="sold"></div>
 	</div>
 
 
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
-	<script src="https://rawgithub.com/fisshy/Angular-drag-drop/master/javascript/dragandrop.js"></script>
+	<script src="https://rawgithub.com/fisshy/Angular-drag-drop/master/src/dragandrop.js"></script>
 
 	<script>
 		angular.module('myApp', ['dragAndDrop'])
