@@ -19,7 +19,7 @@ angular.module('dragAndDrop', [])
 
           angular.forEach( drags, function ( value, key ) {
             angular.element(value).addClass('draging');
-          } );
+          });
 
           $elem.addClass('on-drag');
 
@@ -42,7 +42,7 @@ angular.module('dragAndDrop', [])
 
           angular.forEach( drags, function ( value, key ) {
             angular.element(value).removeClass('draging');
-          } );
+          });
 
           if(angular.isFunction(end)){
             $scope.$apply(function() {
@@ -51,7 +51,7 @@ angular.module('dragAndDrop', [])
           }
 
           dndApi.removeData();
-        } );
+        });
 
         $elem[0].draggable = true;
         $elem.addClass('drag');
