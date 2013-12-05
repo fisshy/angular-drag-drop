@@ -26,7 +26,8 @@
 			drag  
 			class="car" 
 			ng-repeat="car in cars" ng-model="car">
-			{{ car.name }}</div>
+			{{ car.name }}
+		</div>
 
 		<div class="sold" ng-model="sold" drop="drop">
 			<div  ng-repeat="car in sold" >{{ car.name }}</div>
@@ -48,7 +49,7 @@
 				$scope.sold = [ { name : 'Volvo' } ]; 
 
 				$scope.drop = function(car){
-					$scope.sold.push(angular.copy(car));
+					$scope.sold.push(car);
 				};
 
 			});
