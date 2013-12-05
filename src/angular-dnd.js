@@ -6,10 +6,13 @@ angular.module('dragAndDrop', [])
     return {
       restrict: 'A',
       link: function ( $scope, $elem, $attr ) {
+        var ngModel = $scope.$eval($attr.ngModel);      
+        if(angular.isUndefined(ngModel)) {
+          return;
+        } 
 
-        var start = $scope.$eval($attr.start);
-        var end = $scope.$eval($attr.end);
-        var ngModel = $scope.$eval($attr.ngModel);
+        var start = $scope.$eval($attr.start),
+            end   = $scope.$eval($attr.end);
 
         $elem[0].addEventListener( 'dragstart', function ( e ) {
 
@@ -23,14 +26,14 @@ angular.module('dragAndDrop', [])
 
           $elem.addClass('on-drag');
 
-          dndApi.setData(angular.copy(ngModel));
+          dndApi.setData(ngModel);
 
           (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
           (e.originalEvent || e).dataTransfer.setData( 'text', 'no-data' );
 
           if(angular.isFunction(start)) {
             $scope.$apply(function() {
-              start(dndApi.getData());
+              start(dndApi.getData(), $elem);
             });
           }
 
@@ -46,7 +49,7 @@ angular.module('dragAndDrop', [])
 
           if(angular.isFunction(end)){
             $scope.$apply(function() {
-              end(dndApi.getData());
+              end(dndApi.getData(), $elem);
             });
           }
 
@@ -63,13 +66,12 @@ angular.module('dragAndDrop', [])
 
     return {
       link: function ( $scope, $elem, $attr ) {
-
+        
         var elem    = $elem[0];
         var drop    = $scope.$eval($attr.drop),
             enter   = $scope.$eval($attr.enter),
             leave   = $scope.$eval($attr.leave);
-            ngModel = $scope.$eval($attr.ngModel);        
-
+            
         var left    = elem.offsetLeft,
             right   = left + elem.offsetWidth,
             top     = elem.offsetTop,
@@ -82,11 +84,11 @@ angular.module('dragAndDrop', [])
 
           if(angular.isFunction(drop)) {
             $scope.$apply(function() {
-              drop(dndApi.getData(), elem);
+              drop(dndApi.getData(), $elem);
             });
           }
 
-          if (drags.length === 0) {
+          if (!drags.length) {
             drags = document.querySelectorAll( '.drop' );
           }
 
@@ -101,7 +103,7 @@ angular.module('dragAndDrop', [])
           if(elem === e.target) {
             if(angular.isFunction(enter)) {
               $scope.$apply(function() {
-                enter(dndApi.getData(), elem);
+                enter(dndApi.getData(), $elem);
               });
             }
           }
@@ -111,7 +113,7 @@ angular.module('dragAndDrop', [])
           if((e.x < left || e.x > right) || (e.y < top  || e.y > bottom)) {
             if(angular.isFunction(leave)){
               $scope.$apply(function() {
-                leave(dndApi.getData(), elem);
+                leave(dndApi.getData(), $elem);
               });
             }
           }
