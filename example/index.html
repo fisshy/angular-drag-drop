@@ -29,7 +29,7 @@
 			{{ car.name }}
 		</div>
 
-		<div class="sold" ng-model="sold" drop="drop">
+		<div class="sold" drop="drop">
 			<div  ng-repeat="car in sold" >{{ car.name }}</div>
 		</div>
 	</div>	
@@ -48,7 +48,9 @@
 
 				$scope.sold = [ { name : 'Volvo' } ]; 
 
-				$scope.drop = function(car){
+				$scope.drop = function(car, element){
+					var index = $scope.cars.indexOf(car);
+					$scope.cars.splice(index, 1);
 					$scope.sold.push(car);
 				};
 
