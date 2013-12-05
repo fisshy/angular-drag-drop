@@ -20,7 +20,10 @@
     "tests",
     "src",
     "css",
-    ".gitignore"
+    ".gitignore",
+    "package.json",
+    "LICENSE",
+    "Gruntfile.js"
   ],
   "dependencies": {
     "angular": "~1.2.3"
