@@ -22,10 +22,14 @@
 <body>
 
 	<div ng-controller="MyCntrl">
-		<div  class="car" ng-repeat="car in cars" drag="car">{{ drag.name }}</div>
+		<div
+			drag  
+			class="car" 
+			ng-repeat="car in cars" ng-model="car">
+			{{ car.name }}</div>
 
-		<div class="sold" drop="sold" when-drop="drop">
-			<div  ng-repeat="car in $parent.sold" >{{ car.name }}</div>
+		<div class="sold" ng-model="sold" drop="drop">
+			<div  ng-repeat="car in sold" >{{ car.name }}</div>
 		</div>
 	</div>	
 
@@ -47,7 +51,6 @@
 					$scope.sold.push(angular.copy(car));
 				};
 
-				console.log($scope.sold);
 			});
 	</script>
 </body>
