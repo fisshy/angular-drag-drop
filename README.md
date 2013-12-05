@@ -3,7 +3,7 @@ Angular - Drag and Drop
 
 Lightweight drag and drop with angular using directives and HTML5
 
-1,9kb minified, 0,37kb gzipped
+2kb minified, 0,39kb gzipped
 
 See example page for setup
 
@@ -15,24 +15,49 @@ With bower:
 
 </ul>
 
+### Controller
+```js
+angular.module('myApp', ['dragAndDrop'])
+.controller('MyCntrl', function($scope){
+
+	$scope.cars = [ 
+		{ name : 'Volvo' 	}, 
+		{ name : 'Audi' 	}, 
+		{ name : 'BMW' 		}, 
+		{ name : 'Mercedes'	} 
+	];
+
+	$scope.sold = [ { name : 'Volvo' } ]; 
+
+	$scope.moveToSold = function(car, element) {
+		var index = $scope.cars.indexOf(car);
+		$scope.cars.splice(index, 1);
+		$scope.sold.push(car);
+	};
+
+});
+```
+
 ### Drop
 ```html
-<div drop ng-model="['Volvo', 'Audi']"><div>
+<div drop="moveToSold">
+	<div ng-repeat="car in sold">{{ car.name }}</div>
+<div>
 ```
 
 <b>Options</b><br>
-ng-model	- Context of the drop directive<br/>
 drop  		- Takes a function thats called when drag is dropped<br/>
 enter 		- Takes a function thats called when drag enters drop-area<br/>
 leave 		- Takes a function thats called when drag leaves drop-area<br/>
+
     
 ### Drag
 ```html
-<div drag ng-model="'Volvo'"><div>
+<div ng-repeat="car in cars" drag ng-model="car">{{ car.name }}<div>
 ```
 
 <b>Options</b><br>
-ng-model    - Context of the current drag item.<br/>
+ng-model  * - Context of the current drag item.<br/>
 start 		- Takes a function to be called when drag starts<br />
 end   		- Takes a function to be called when drag ends<br/>
 
