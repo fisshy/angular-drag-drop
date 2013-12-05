@@ -5,6 +5,12 @@ Drag and drop data with angular using directives and HTML5
 
 See example page for setup
 
+Install
+-------
+With bower:
+
+    $ bower install angular-dragndrop
+
 </ul>
 
 <b>drop</b><br/>
