@@ -16,9 +16,9 @@ With bower:
 </ul>
 
 ### Drop
-´´´html
+```html
 <div drop ng-model="['Volvo', 'Audi']"><div>
-´´´
+```
 
 <b>Options</b><br>
 ng-model	- Context of the drop directive<br/>
@@ -27,9 +27,9 @@ enter 		- Takes a function thats called when drag enters drop-area<br/>
 leave 		- Takes a function thats called when drag leaves drop-area<br/>
     
 ### Drag
-´´´html
+```html
 <div drag ng-model="'Volvo'"><div>
-´´´
+```
 
 <b>Options</b><br>
 ng-model    - Context of the current drag item.<br/>
