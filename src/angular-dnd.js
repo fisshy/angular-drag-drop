@@ -23,7 +23,7 @@ angular.module('dragAndDrop', [])
 
           $elem.addClass('on-drag');
 
-          dndApi.setData(ngModel);
+          dndApi.setData(angular.copy(ngModel));
 
           (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
           (e.originalEvent || e).dataTransfer.setData( 'text', 'no-data' );

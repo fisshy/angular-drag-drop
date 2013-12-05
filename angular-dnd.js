@@ -19,17 +19,19 @@ angular.module('dragAndDrop', [])
 
           angular.forEach( drags, function ( value, key ) {
             angular.element(value).addClass('draging');
-          } );
+          });
 
           $elem.addClass('on-drag');
 
-          dndApi.setData(ngModel);
+          dndApi.setData(angular.copy(ngModel));
 
           (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
           (e.originalEvent || e).dataTransfer.setData( 'text', 'no-data' );
 
           if(angular.isFunction(start)) {
-            start(dndApi.getData());
+            $scope.$apply(function() {
+              start(dndApi.getData());
+            });
           }
 
         });
@@ -40,14 +42,16 @@ angular.module('dragAndDrop', [])
 
           angular.forEach( drags, function ( value, key ) {
             angular.element(value).removeClass('draging');
-          } );
+          });
 
           if(angular.isFunction(end)){
-            end(dndApi.getData());
+            $scope.$apply(function() {
+              end(dndApi.getData());
+            });
           }
 
           dndApi.removeData();
-        } );
+        });
 
         $elem[0].draggable = true;
         $elem.addClass('drag');
@@ -77,7 +81,7 @@ angular.module('dragAndDrop', [])
           }
 
           if(angular.isFunction(drop)) {
-            $scope.$apply(function(){
+            $scope.$apply(function() {
               drop(dndApi.getData(), elem);
             });
           }
@@ -95,8 +99,10 @@ angular.module('dragAndDrop', [])
 
         elem.addEventListener ('dragenter', function(e) {
           if(elem === e.target) {
-            if(angular.isFunction(enter)){
-              enter(dndApi.getData(), elem);
+            if(angular.isFunction(enter)) {
+              $scope.$apply(function() {
+                enter(dndApi.getData(), elem);
+              });
             }
           }
         });
@@ -104,7 +110,9 @@ angular.module('dragAndDrop', [])
         elem.addEventListener ( 'dragleave', function(e) {
           if((e.x < left || e.x > right) || (e.y < top  || e.y > bottom)) {
             if(angular.isFunction(leave)){
-              leave(dndApi.getData(), elem);
+              $scope.$apply(function() {
+                leave(dndApi.getData(), elem);
+              });
             }
           }
         });
