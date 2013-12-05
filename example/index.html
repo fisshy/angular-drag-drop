@@ -22,14 +22,11 @@
 <body>
 
 	<div ng-controller="MyCntrl">
-		<div
-			drag  
-			class="car" 
-			ng-repeat="car in cars" ng-model="car">
+		<div drag  class="car" ng-repeat="car in cars" ng-model="car">
 			{{ car.name }}
 		</div>
 
-		<div class="sold" drop="drop">
+		<div class="sold" drop="moveToSold">
 			<div  ng-repeat="car in sold" >{{ car.name }}</div>
 		</div>
 	</div>	
@@ -44,11 +41,16 @@
 		angular.module('myApp', ['dragAndDrop'])
 			.controller('MyCntrl', function($scope){
 
-				$scope.cars = [ { name : 'Volvo' }, { name : 'Audi' }, { name : 'BMW' }, { name :'Mercedes' } ];
+				$scope.cars = [ 
+					{ name : 'Volvo' 		}, 
+					{ name : 'Audi' 		}, 
+					{ name : 'BMW' 			}, 
+					{ name : 'Mercedes' } 
+				];
 
 				$scope.sold = [ { name : 'Volvo' } ]; 
 
-				$scope.drop = function(car, element){
+				$scope.moveToSold = function(car, element){
 					var index = $scope.cars.indexOf(car);
 					$scope.cars.splice(index, 1);
 					$scope.sold.push(car);
