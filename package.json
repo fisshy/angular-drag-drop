@@ -1,0 +1,28 @@
+{
+  "name": "angular-dnd",
+  "version": "0.0.1",
+  "description": "Drag and drop directive using HTML api",
+  "keywords": ["angular", "dnd", "drag and drop", "directive"],
+  "main": "angular-dnd.min.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fisshy/angular-drag-drop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fisshy/angular-drag-drop/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joachim Karlsson",
+  "contributors": ["Joachim Karlsson"],
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-ngmin": "0.0.3",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "~0.3.0"
+  }
+}
