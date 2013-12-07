@@ -3,7 +3,7 @@ Angular - Drag and Drop
 
 Lightweight drag and drop with angular using directives and HTML5
 
-2kb minified, 0,39kb gzipped
+2.1kb minified, 0,47kb gzipped
 
 See example page for setup
 
