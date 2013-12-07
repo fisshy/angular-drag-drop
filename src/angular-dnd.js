@@ -88,7 +88,7 @@ angular.module('dragAndDrop', [])
         dndApi.addArea($elem);
 
         elem.addEventListener( 'drop', function ( e ) {
-          var result = dndApi.getData()
+          var result = dndApi.getData();
           if(!$elem.hasClass('draging')){ return; }
           if(e.stopPropagation()) { e.preventDefault(); }
 
@@ -108,7 +108,7 @@ angular.module('dragAndDrop', [])
         elem.addEventListener ('dragenter', function(e) {
           if(elem === e.target && angular.isFunction(enter)) {
             $scope.$apply(function() {
-              var result = dndApi.getData()
+              var result = dndApi.getData();
               enter(result.data, result.element);
             });
           }
@@ -118,7 +118,7 @@ angular.module('dragAndDrop', [])
           if((e.x < left || e.x > right) || (e.y < top  || e.y > bottom)) {
             if(angular.isFunction(leave)){
               $scope.$apply(function() {
-                var result = dndApi.getData()
+                var result = dndApi.getData();
                 leave(result.data, result.element);
               });
             }
