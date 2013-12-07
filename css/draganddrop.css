@@ -12,9 +12,10 @@
 drop element
 */
 .drop {
-    height: 500px;
-    padding: 9px;
-    border: 2px dashed #fff;
+    margin:20px;
+    min-height: 200px;
+    padding: 25px;
+    border: 1px dashed #fff;
 }
 
 /*
@@ -28,16 +29,16 @@ drag element
 element being dragged
 */
 .on-drag {
-    opacity: 0.4;
+    opacity: 0.6;
 }
 
 /*
 class added to all .drop elements while dragging
 */
 .draging {
-    padding: 9px;
+    padding: 25px;
     background: #ededed;
-    border: 2px dashed #000;
+    border: 1px dashed #000;
     border-radius: 10px;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
