@@ -5,7 +5,7 @@ Lightweight drag and drop with angular using directives and HTML5
 
 2.1kb minified, 0,47kb gzipped
 
-See <a href="https://github.com/fisshy/angular-drag-drop/blob/master/example/index.html" alt="example">example</a>page for setup
+See <a href="https://github.com/fisshy/angular-drag-drop/blob/master/example/index.html" alt="example">example</a> page for setup
 
 Install
 -------
