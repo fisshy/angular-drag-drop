@@ -12,16 +12,16 @@ angular.module('dragAndDrop', [])
         return parent(p, max);
       }
     };
-
+    var attrs = ['start', 'end', 'ngModel'];
     return {
       restrict: 'A',
       link: function ( $scope, $elem, $attr ) {
-        var ngModel = $scope.$eval($attr.ngModel);      
-        if(angular.isUndefined(ngModel)) { return; } 
-
+        var me = {};
+        angular.forEach(attrs, function(attr, key) {
+          if($attr[attr]) { me[attr] = $scope.$eval($attr[attr]); }
+        });
+        if(angular.isUndefined(me.ngModel)) { return; } 
         var elem  = $elem[0];
-        var start = $scope.$eval($attr.start),
-            end   = $scope.$eval($attr.end);
 
         elem.addEventListener( 'dragstart', function ( e ) {
           if(drags.length === 0) { drags = document.querySelectorAll( '.drop' ); }
@@ -32,12 +32,12 @@ angular.module('dragAndDrop', [])
 
           $elem.addClass('on-drag');
 
-          dndApi.setData(ngModel, $elem);
+          dndApi.setData(me.ngModel, $elem);
 
           (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
           (e.originalEvent || e).dataTransfer.setData( 'text', 'no-data' );
 
-          if(angular.isFunction(start)) {
+          if(angular.isFunction(me.start)) {
             $scope.$apply(function() {
               start(dndApi.getData(), $elem);
             });
@@ -53,9 +53,9 @@ angular.module('dragAndDrop', [])
             area.removeClass('draging');
           });
 
-          if(angular.isFunction(end)){
+          if(angular.isFunction(me.end)){
             $scope.$apply(function() {
-              end(dndApi.getData(), $elem);
+              me.end(dndApi.getData(), $elem);
             });
           }
           dndApi.clear();
@@ -69,21 +69,21 @@ angular.module('dragAndDrop', [])
 
     var areas = [];
     var drags = [];
-
-   
+    var attrs = ['drop', 'enter', 'leave'];
 
     return {
       link: function ( $scope, $elem, $attr ) {
         
+        var me      = {};
         var elem    = $elem[0];
-        var drop    = $scope.$eval($attr.drop),
-            enter   = $scope.$eval($attr.enter),
-            leave   = $scope.$eval($attr.leave);
-            
         var left    = elem.offsetLeft,
             right   = left + elem.offsetWidth,
             top     = elem.offsetTop,
             bottom  = top + elem.offsetHeight;
+
+        angular.forEach(attrs, function(attr, key) {
+          if($attr[attr]) { me[attr] = $scope.$eval($attr[attr]); }
+        });
 
         dndApi.addArea($elem);
 
@@ -91,10 +91,9 @@ angular.module('dragAndDrop', [])
           var result = dndApi.getData();
           if(!$elem.hasClass('draging')){ return; }
           if(e.stopPropagation()) { e.preventDefault(); }
-
-          if(angular.isFunction(drop)) {
+          if(angular.isFunction(me.drop)) {
             $scope.$apply(function() {
-              drop(result.data, result.element);
+              me.drop(result.data, result.element);
             });
           }
 
@@ -106,20 +105,20 @@ angular.module('dragAndDrop', [])
         });
 
         elem.addEventListener ('dragenter', function(e) {
-          if(elem === e.target && angular.isFunction(enter)) {
+          if(elem === e.target && angular.isFunction(me.enter)) {
             $scope.$apply(function() {
               var result = dndApi.getData();
-              enter(result.data, result.element);
+              me.enter(result.data, result.element);
             });
           }
         });
 
         elem.addEventListener ( 'dragleave', function(e) {
           if((e.x < left || e.x > right) || (e.y < top  || e.y > bottom)) {
-            if(angular.isFunction(leave)){
+            if(angular.isFunction(me.leave)){
               $scope.$apply(function() {
                 var result = dndApi.getData();
-                leave(result.data, result.element);
+                me.leave(result.data, result.element);
               });
             }
           }
