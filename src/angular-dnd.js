@@ -93,7 +93,7 @@ angular.module('dragAndDrop', [])
           if(e.stopPropagation()) { e.preventDefault(); }
           if(angular.isFunction(me.drop)) {
             $scope.$apply(function() {
-              me.drop(result.data, result.element);
+              me.drop(result.data, result.element, e);
             });
           }
 
