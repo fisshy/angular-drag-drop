@@ -94,7 +94,7 @@ angular.module('dragAndDrop', [])
 
           if(angular.isFunction(drop)) {
             $scope.$apply(function() {
-              drop(result.data, result.element);
+              drop(result.data, result.element, e);
             });
           }
 
