@@ -42,7 +42,18 @@ angular.module('dragAndDrop', [])
               start(dndApi.getData(), $elem);
             });
           }
+          
+          if(angular.isString($attr.dragImage)) {
+            var image = $attr.dragImage,
+                imageWidth = $attr.dragImageWidth,
+                dragImageShiftX = $attr.dragImageShiftX,
+                dragImageShiftY = $attr.dragImageShiftY,
+                dragImage = document.createElement('img');
 
+            dragImage.src = image;
+            dragImage.width = imageWidth;
+            e.dataTransfer.setDragImage(dragImage, dragImageShiftX, dragImageShiftY);
+          }
         });
 
         elem.addEventListener( 'dragend', function ( e ) {
