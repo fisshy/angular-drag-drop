@@ -12,18 +12,21 @@ angular.module('dragAndDrop', [])
         return parent(p, max);
       }
     };
-    var attrs = ['start', 'end', 'ngModel'];
+
     return {
       restrict: 'A',
       link: function ( $scope, $elem, $attr ) {
-        var me = {};
-        angular.forEach(attrs, function(attr, key) {
-          if($attr[attr]) { me[attr] = $scope.$eval($attr[attr]); }
-        });
-        if(angular.isUndefined(me.ngModel)) { return; } 
+        var ngModel = $scope.$eval($attr.ngModel);      
+        if(angular.isUndefined(ngModel)) { return; } 
+
         var elem  = $elem[0];
+        var start = $scope.$eval($attr.start),
+            end   = $scope.$eval($attr.end);
 
         elem.addEventListener( 'dragstart', function ( e ) {
+          if($attr.dragEnable === 'false') {
+            return false;
+          }
           if(drags.length === 0) { drags = document.querySelectorAll( '.drop' ); }
 
           angular.forEach(dndApi.areas(), function ( value, key ) {
@@ -32,15 +35,27 @@ angular.module('dragAndDrop', [])
 
           $elem.addClass('on-drag');
 
-          dndApi.setData(me.ngModel, $elem);
+          dndApi.setData(ngModel, $elem);
 
           (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
           (e.originalEvent || e).dataTransfer.setData( 'text', 'no-data' );
 
-          if(angular.isFunction(me.start)) {
+          if(angular.isFunction(start)) {
             $scope.$apply(function() {
               start(dndApi.getData(), $elem);
             });
+          }
+
+          if(angular.isString($attr.dragImage)) {
+            var image = $attr.dragImage,
+                imageWidth = $attr.dragImageWidth,
+                dragImageShiftX = $attr.dragImageShiftX,
+                dragImageShiftY = $attr.dragImageShiftY,
+                dragImage = document.createElement('img');
+
+            dragImage.src = image;
+            dragImage.width = imageWidth;
+            e.dataTransfer.setDragImage(dragImage, dragImageShiftX, dragImageShiftY);
           }
 
         });
@@ -53,9 +68,9 @@ angular.module('dragAndDrop', [])
             area.removeClass('draging');
           });
 
-          if(angular.isFunction(me.end)){
+          if(angular.isFunction(end)){
             $scope.$apply(function() {
-              me.end(dndApi.getData(), $elem);
+              end(dndApi.getData(), $elem);
             });
           }
           dndApi.clear();
@@ -69,31 +84,34 @@ angular.module('dragAndDrop', [])
 
     var areas = [];
     var drags = [];
-    var attrs = ['drop', 'enter', 'leave'];
 
     return {
       link: function ( $scope, $elem, $attr ) {
-        
-        var me      = {};
+
         var elem    = $elem[0];
+        var drop    = $scope.$eval($attr.drop),
+            enter   = $scope.$eval($attr.enter),
+            leave   = $scope.$eval($attr.leave);
+            
         var left    = elem.offsetLeft,
             right   = left + elem.offsetWidth,
             top     = elem.offsetTop,
             bottom  = top + elem.offsetHeight;
 
-        angular.forEach(attrs, function(attr, key) {
-          if($attr[attr]) { me[attr] = $scope.$eval($attr[attr]); }
-        });
-
         dndApi.addArea($elem);
 
         elem.addEventListener( 'drop', function ( e ) {
+          if($attr.dropEnable === 'false') {
+            return false;
+          }
+
           var result = dndApi.getData();
           if(!$elem.hasClass('draging')){ return; }
           if(e.stopPropagation()) { e.preventDefault(); }
-          if(angular.isFunction(me.drop)) {
+
+          if(angular.isFunction(drop)) {
             $scope.$apply(function() {
-              me.drop(result.data, result.element);
+              drop(result.data, result.element, e);
             });
           }
 
@@ -105,20 +123,20 @@ angular.module('dragAndDrop', [])
         });
 
         elem.addEventListener ('dragenter', function(e) {
-          if(elem === e.target && angular.isFunction(me.enter)) {
+          if(elem === e.target && angular.isFunction(enter)) {
             $scope.$apply(function() {
               var result = dndApi.getData();
-              me.enter(result.data, result.element);
+              enter(result.data, result.element);
             });
           }
         });
 
         elem.addEventListener ( 'dragleave', function(e) {
           if((e.x < left || e.x > right) || (e.y < top  || e.y > bottom)) {
-            if(angular.isFunction(me.leave)){
+            if(angular.isFunction(leave)){
               $scope.$apply(function() {
                 var result = dndApi.getData();
-                me.leave(result.data, result.element);
+                leave(result.data, result.element);
               });
             }
           }
@@ -159,6 +177,3 @@ angular.module('dragAndDrop', [])
       }
     };
   });
-
-
-
