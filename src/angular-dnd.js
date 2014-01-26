@@ -89,8 +89,7 @@ angular.module('dragAndDrop', [])
         dndApi.addArea($elem);
 
         elem.addEventListener( 'drop', function ( e ) {
-          e.preventDefault();
-          if(e.stopPropagation()) { e.preventDefault(); }
+          if (e.preventDefault) { e.preventDefault(); }
 
           var result = dndApi.getData();
           if(!$elem.hasClass('draging')){ return; }
