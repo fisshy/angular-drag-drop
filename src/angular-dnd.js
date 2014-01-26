@@ -35,11 +35,12 @@ angular.module('dragAndDrop', [])
           dndApi.setData(me.ngModel, $elem);
 
           (e.originalEvent || e).dataTransfer.effectAllowed = 'move';
-          (e.originalEvent || e).dataTransfer.setData( 'text', 'no-data' );
+
+          (e.originalEvent || e).dataTransfer.setData( 'text', 'test' );
 
           if(angular.isFunction(me.start)) {
             $scope.$apply(function() {
-              start(dndApi.getData(), $elem);
+              me.start(dndApi.getData(), $elem);
             });
           }
 
@@ -88,9 +89,11 @@ angular.module('dragAndDrop', [])
         dndApi.addArea($elem);
 
         elem.addEventListener( 'drop', function ( e ) {
+          e.preventDefault();
+          if(e.stopPropagation()) { e.preventDefault(); }
+
           var result = dndApi.getData();
           if(!$elem.hasClass('draging')){ return; }
-          if(e.stopPropagation()) { e.preventDefault(); }
           if(angular.isFunction(me.drop)) {
             $scope.$apply(function() {
               me.drop(result.data, result.element);
