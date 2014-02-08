@@ -82,6 +82,8 @@ angular.module('dragAndDrop', [])
             top     = elem.offsetTop,
             bottom  = top + elem.offsetHeight;
 
+        var ngModel = $scope.$eval($attr.ngModel);
+
         angular.forEach(attrs, function(attr, key) {
           if($attr[attr]) { me[attr] = $scope.$eval($attr[attr]); }
         });
@@ -95,7 +97,11 @@ angular.module('dragAndDrop', [])
           if(!$elem.hasClass('draging')){ return; }
           if(angular.isFunction(me.drop)) {
             $scope.$apply(function() {
-              me.drop(result.data, result.element);
+              if(ngModel) {
+                me.drop(result.data, ngModel, result.element);
+              } else {
+                me.drop(result.data, result.element);
+              }
             });
           }
 
