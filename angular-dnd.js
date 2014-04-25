@@ -27,7 +27,7 @@ angular.module('dragAndDrop', [])
           if(drags.length === 0) { drags = document.querySelectorAll( '.drop' ); }
 
           angular.forEach(dndApi.areas(), function ( value, key ) {
-            if(value[0] !== parent($elem, 0)) { value.addClass('draging'); }
+            if(value[0] !== parent($elem, 0)) { value.addClass('dragging'); }
           });
 
           $elem.addClass('on-drag');
@@ -51,7 +51,7 @@ angular.module('dragAndDrop', [])
           $elem.removeClass('on-drag');
 
           angular.forEach(dndApi.areas(), function ( area, key ) {
-            area.removeClass('draging');
+            area.removeClass('dragging');
           });
 
           if(angular.isFunction(me.end)){
@@ -94,7 +94,7 @@ angular.module('dragAndDrop', [])
           if (e.preventDefault) { e.preventDefault(); }
 
           var result = dndApi.getData();
-          if(!$elem.hasClass('draging')){ return; }
+          if(!$elem.hasClass('dragging')){ return; }
           if(angular.isFunction(me.drop)) {
             $scope.$apply(function() {
               if(ngModel) {
@@ -106,7 +106,7 @@ angular.module('dragAndDrop', [])
           }
 
           angular.forEach(dndApi.areas(), function (area, key) {
-            area.addClass('draging');
+            area.addClass('dragging');
           });
 
           dndApi.clear();
