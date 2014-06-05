@@ -12,10 +12,12 @@ angular.module('dragAndDrop', [])
         return parent(p, max);
       }
     };
+    var dragables = [];
     var attrs = ['start', 'end', 'ngModel'];
     return {
       restrict: 'A',
       link: function ( $scope, $elem, $attr ) {
+        dragables.push($elem);
         var me = {};
         angular.forEach(attrs, function(attr, key) {
           if($attr[attr]) { me[attr] = $scope.$eval($attr[attr]); }
@@ -27,10 +29,10 @@ angular.module('dragAndDrop', [])
           if(drags.length === 0) { drags = document.querySelectorAll( '.drop' ); }
 
           angular.forEach(dndApi.areas(), function ( value, key ) {
-            if(value[0] !== parent($elem, 0)) { value.addClass('dragging'); }
+            if(value[0] !== parent($elem, 0)) { value.addClass('dropable'); }
           });
 
-          $elem.addClass('on-drag');
+          $elem.addClass('dragging');
 
           dndApi.setData(me.ngModel, $elem);
 
@@ -47,19 +49,38 @@ angular.module('dragAndDrop', [])
         });
 
         elem.addEventListener( 'dragend', function ( e ) {
-
-          $elem.removeClass('on-drag');
-
-          angular.forEach(dndApi.areas(), function ( area, key ) {
-            area.removeClass('dragging');
+          $elem.removeClass('dragging');
+          angular.forEach(dndApi.areas(), function(area) {
+            area.removeClass('dropable');
           });
-
+          angular.forEach(dragables, function($el) {
+            $el.removeClass('hover');
+          });
           if(angular.isFunction(me.end)){
             $scope.$apply(function() {
               me.end(dndApi.getData(), $elem);
             });
           }
           dndApi.clear();
+        });
+
+        var hasHover = false;
+        elem.addEventListener ( 'dragover', function ( e ) {
+          if (e.preventDefault) { e.preventDefault(); }
+          if(!hasHover) {
+            $elem.addClass('hover');
+            hasHover = true;
+          }
+          return false;
+        });
+
+        elem.addEventListener ( 'dragleave', function ( e ) {
+          if (e.preventDefault) { e.preventDefault(); }
+          if(hasHover) {
+            $elem.removeClass('hover');
+            hasHover = false;
+          }
+          return false;
         });
 
         elem.draggable = true;
@@ -94,7 +115,7 @@ angular.module('dragAndDrop', [])
           if (e.preventDefault) { e.preventDefault(); }
 
           var result = dndApi.getData();
-          if(!$elem.hasClass('dragging')){ return; }
+          if(!$elem.hasClass('dropable')){ return; }
           if(angular.isFunction(me.drop)) {
             $scope.$apply(function() {
               if(ngModel) {
@@ -106,7 +127,8 @@ angular.module('dragAndDrop', [])
           }
 
           angular.forEach(dndApi.areas(), function (area, key) {
-            area.addClass('dragging');
+            area.addClass('dropable');
+            area.removeClass('hover');
           });
 
           dndApi.clear();

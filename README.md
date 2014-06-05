@@ -3,7 +3,7 @@ Angular - Drag and Drop
 
 Lightweight drag and drop with angular using directives and HTML5
 
-2.1kb minified, 0,47kb gzipped
+2.6kb minified, 0,54kb gzipped
 
 See <a href="https://github.com/fisshy/angular-drag-drop/blob/master/example/index.html" alt="example">example</a> page for setup
 
@@ -63,6 +63,25 @@ end   		- Takes a function to be called when drag ends<br/>
 
 <b>Exampel of usage</b>
 <a target='_blank' href='http://imageshack.us/photo/my-images/268/angulardnd.png/'><img src='http://img268.imageshack.us/img268/4500/angulardnd.png' border='0'/></a><br></a>
+
+### CSS
+```css
+Drag element
+.drag
+
+When drag element hovers another drag element
+.drag.hover
+
+When .drag is being dragged
+.drag.dragging
+
+Drop area
+.drop
+
+When .drag is being dragged appended to .drop
+.drop.dropable
+```
+
 
 Building
 -------

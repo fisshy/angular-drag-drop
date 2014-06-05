@@ -47,12 +47,14 @@
 
 				$scope.moveToSold = function(car, element){
 					var index = $scope.cars.indexOf(car);
+					if(index == -1) return;
 					$scope.cars.splice(index, 1);
 					$scope.sold.push(car);
 				};
 
 				$scope.moveToSelling = function(car, element){
 					var index = $scope.sold.indexOf(car);
+					if(index == -1) return;
 					$scope.sold.splice(index, 1);
 					$scope.cars.push(car);
 				};
