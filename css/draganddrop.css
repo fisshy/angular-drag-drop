@@ -56,3 +56,9 @@ class added to all .drop elements while dragging
     transition: all 0.5s ease;
 }
 
+/*
+ * class added to all .drop elements when a .drag is hovering
+ */
+.drop.dropable.hover {
+    background-color: red;
+}
