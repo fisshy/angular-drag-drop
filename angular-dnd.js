@@ -23,6 +23,7 @@ angular.module('dragAndDrop', [])
           if($attr[attr]) { me[attr] = $scope.$eval($attr[attr]); }
         });
         if(angular.isUndefined(me.ngModel)) { return; } 
+
         var elem  = $elem[0];
 
         elem.addEventListener( 'dragstart', function ( e ) {
@@ -131,10 +132,16 @@ angular.module('dragAndDrop', [])
             area.removeClass('hover');
           });
 
+          $elem.removeClass("hover");
           dndApi.clear();
         });
 
+        var hasHover = false;
         elem.addEventListener ('dragenter', function(e) {
+          if(!hasHover) {
+            $elem.addClass('hover');
+            hasHover = true;
+          }
           if(elem === e.target && angular.isFunction(me.enter)) {
             $scope.$apply(function() {
               var result = dndApi.getData();
@@ -144,6 +151,10 @@ angular.module('dragAndDrop', [])
         });
 
         elem.addEventListener ( 'dragleave', function(e) {
+          if(hasHover) {
+            $elem.removeClass('hover');
+            hasHover = false;
+          }
           if((e.x < left || e.x > right) || (e.y < top  || e.y > bottom)) {
             if(angular.isFunction(me.leave)){
               $scope.$apply(function() {
@@ -155,6 +166,10 @@ angular.module('dragAndDrop', [])
         });
 
         elem.addEventListener ( 'dragover', function ( e ) {
+          if(!hasHover) {
+            $elem.addClass('hover');
+            hasHover = true;
+          }
           if (e.preventDefault) { e.preventDefault(); }
           return false;
         });

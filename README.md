@@ -80,6 +80,9 @@ Drop area
 
 When .drag is being dragged appended to .drop
 .drop.dropable
+
+When drag element hovers a drop element
+.drop.dropable.hover
 ```
 
 
